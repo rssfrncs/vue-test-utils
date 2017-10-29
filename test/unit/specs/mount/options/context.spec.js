@@ -70,10 +70,7 @@ describe('context', () => {
     const defaultValue = '[vue-test-utils]: testProp default value'
     const Component = {
       functional: true,
-      render: (h, { props, children }) => {
-        console.log(children)
-        h('div', children)
-      }
+      render: (h, { props, children }) => h('div', children)
     }
     const wrapper = mount(Component, {
       context: {
