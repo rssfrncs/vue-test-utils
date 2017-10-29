@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import mount from '~src/mount'
 
-function cannotIdentifyComponent () {
+function cannotIdentifyComponent() {
   const version = Number(`${Vue.version.split('.')[0]}.${Vue.version.split('.')[1]}`)
   return version <= 2.2
 }
@@ -15,7 +15,7 @@ describe('context', () => {
 
     const Component = {
       functional: true,
-      render (h, { props }) {
+      render(h, { props }) {
         return h('div')
       },
       name: 'common'
@@ -64,5 +64,23 @@ describe('context', () => {
     }
     const wrapper = mount(Component)
     expect(wrapper.element.textContent).to.equal(defaultValue)
+  })
+
+  it('mounts functional component with a defined context.children', () => {
+    const defaultValue = '[vue-test-utils]: testProp default value'
+    const Component = {
+      functional: true,
+      render: (h, { props, children }) => {
+        console.log(children)
+        h('div', children)
+      }
+    }
+    const wrapper = mount(Component, {
+      context: {
+        children: ['hello']
+      },
+      children: ['hello']
+    })
+    expect(wrapper.element.textContent).to.equal('hello')
   })
 })
